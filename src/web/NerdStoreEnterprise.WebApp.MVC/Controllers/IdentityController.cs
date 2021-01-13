@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NerdStoreEnterprise.WebApp.MVC.Models;
+using NerdStoreEnterprise.WebApp.MVC.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -13,6 +12,13 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 {
     public class IdentityController : MainController
     {
+        private readonly IAuthenticationService _authenticationService;
+
+        public IdentityController(IAuthenticationService authenticationService)
+        {
+            _authenticationService = authenticationService;
+        }
+
         [HttpGet]
         [Route("register")]
         public IActionResult Register()
@@ -26,11 +32,11 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
         {
             if (!ModelState.IsValid) return View(registerUserViewModel);
 
-            var resposta = await _autenticacaoService.Register(registerUserViewModel);
+            var response = await _authenticationService.Register(registerUserViewModel);
 
-            if (ResponsePossuiErros(resposta.ResponseResult)) return View(registerUserViewModel);
+            if (ResponsePossuiErros(response.ResponseResult)) return View(registerUserViewModel);
 
-            await PerformLoginAsync(resposta);
+            await PerformLoginAsync(response);
 
             return RedirectToAction("Index", "Home");
         }
@@ -52,7 +58,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 
             if (!ModelState.IsValid) return View(usuarioLogin);
 
-            var resposta = await _autenticacaoService.Login(usuarioLogin);
+            var resposta = await _authenticationService.Login(usuarioLogin);
 
             if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
 
@@ -70,7 +76,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
             return View();
         }
 
-        private async Task RealizarLogin(UsuarioRespostaLogin resposta)
+        private async Task PerformLoginAsync(UsuarioRespostaLogin resposta)
         {
             var token = ObterTokenFormatado(resposta.AccessToken);
 
