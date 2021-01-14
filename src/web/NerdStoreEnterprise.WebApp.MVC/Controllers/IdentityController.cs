@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NerdStoreEnterprise.WebApp.MVC.Models;
 using NerdStoreEnterprise.WebApp.MVC.Services;
@@ -34,7 +35,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 
             var response = await _authenticationService.Register(registerUserViewModel);
 
-            if (ResponsePossuiErros(response.ResponseResult)) return View(registerUserViewModel);
+            if (ResponseHasErrors(response.ResponseResult)) return View(registerUserViewModel);
 
             await PerformLoginAsync(response);
 
@@ -76,12 +77,12 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
             return View();
         }
 
-        private async Task PerformLoginAsync(UsuarioRespostaLogin resposta)
+        private async Task PerformLoginAsync(UserLoginResponse response)
         {
-            var token = ObterTokenFormatado(resposta.AccessToken);
+            var token = ObterTokenFormatado(response.AccessToken);
 
             var claims = new List<Claim>();
-            claims.Add(new Claim("JWT", resposta.AccessToken));
+            claims.Add(new Claim("JWT", response.AccessToken));
             claims.AddRange(token.Claims);
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -99,8 +100,6 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
         }
 
         private static JwtSecurityToken ObterTokenFormatado(string jwtToken)
-        {
-            return new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
-        }
+            => new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
     }
 }

@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NerdStoreEnterprise.WebApp.MVC.Models;
 using System.Linq;
 
 namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 {
     public class MainController : Controller
     {
-        protected bool ResponsePossuiErros(ResponseResult response)
+        protected bool ResponseHasErrors(ResponseResult response)
         {
-            if (response != null && response.Errors.Mensagens.Any())
+            if (response != null && response.Errors.Messages.Any())
             {
-                foreach (var mensagem in response.Errors.Mensagens)
+                foreach (var mensagem in response.Errors.Messages)
                 {
                     ModelState.AddModelError(string.Empty, mensagem);
                 }

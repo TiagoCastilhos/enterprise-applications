@@ -7,12 +7,18 @@ namespace NerdStoreEnterprise.WebApp.MVC.Models
         public string AccessToken { get; }
         public double ExpiresIn { get; }
         public UserToken UserToken { get; }
+        public ResponseResult ResponseResult { get; set; }
 
         public UserLoginResponse(string accessToken, double expiresIn, UserToken userToken)
         {
             AccessToken = accessToken;
             ExpiresIn = expiresIn;
             UserToken = userToken;
+        }
+
+        public UserLoginResponse(ResponseResult responseResult)
+        {
+            ResponseResult = responseResult;
         }
     }
 

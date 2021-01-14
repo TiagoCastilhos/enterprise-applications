@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NerdStoreEnterprise.WebApp.MVC.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : Service, IAuthenticationService
     {
         private readonly HttpClient _httpClient;
 
@@ -20,8 +20,10 @@ namespace NerdStoreEnterprise.WebApp.MVC.Services
             var loginContent = new StringContent(JsonSerializer.Serialize(userLoginViewModel), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("http://localhost:44396/api/identity/login", loginContent);
-
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+
+            if (!HandleResponseErrors(response))
+                return new UserLoginResponse(JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), options));
 
             return JsonSerializer.Deserialize<UserLoginResponse>(await response.Content.ReadAsStringAsync(), options);
         }
@@ -31,10 +33,10 @@ namespace NerdStoreEnterprise.WebApp.MVC.Services
             var registerContent = new StringContent(JsonSerializer.Serialize(registerUserViewModel), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("http://localhost:44396/api/identity/register", registerContent);
-
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
-            return JsonSerializer.Deserialize<UserLoginResponse>(await response.Content.ReadAsStringAsync(), options);
+            if (!HandleResponseErrors(response))
+                return JsonSerializer.Deserialize<UserLoginResponse>(await response.Content.ReadAsStringAsync(), options);
         }
     }
 }
