@@ -9,7 +9,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Configuration
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddHttpClient<IAuthenticationService, AuthenticationService>();
+            services.AddHttpClient<IAuthService, AuthenticationService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
 

@@ -13,9 +13,9 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 {
     public class IdentityController : MainController
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthService _authenticationService;
 
-        public IdentityController(IAuthenticationService authenticationService)
+        public IdentityController(IAuthService authenticationService)
         {
             _authenticationService = authenticationService;
         }
@@ -44,7 +44,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 
         [HttpGet]
         [Route("login")]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 
@@ -57,13 +57,13 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            if (!ModelState.IsValid) return View(usuarioLogin);
+            if (!ModelState.IsValid) return View(userLoginViewModel);
 
-            var resposta = await _authenticationService.Login(usuarioLogin);
+            var response = await _authenticationService.Login(userLoginViewModel);
 
-            if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
+            if (ResponseHasErrors(response.ResponseResult)) return View(userLoginViewModel);
 
-            await PerformLoginAsync(resposta);
+            await PerformLoginAsync(response);
 
             if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
 
@@ -74,7 +74,8 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
         [Route("logout")]
         public async Task<IActionResult> LogoutAsync(string returnUrl = null)
         {
-            return View();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
         private async Task PerformLoginAsync(UserLoginResponse response)

@@ -1,7 +1,4 @@
 ﻿using NerdStoreEnterprise.WebApp.MVC.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -19,7 +16,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Services
                 "application/json");
         }
 
-        protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
+        protected async Task<T> Deserialize<T>(HttpResponseMessage responseMessage)
         {
             var options = new JsonSerializerOptions
             {

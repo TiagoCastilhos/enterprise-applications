@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace NerdStoreEnterprise.WebApp.MVC.Services
 {
-    public interface IAuthenticationService
+    public interface IAuthService
     {
         Task<UserLoginResponse> Login(UserLoginViewModel userLoginViewModel);
         Task<UserLoginResponse> Register(RegisterUserViewModel registerUserViewModel);

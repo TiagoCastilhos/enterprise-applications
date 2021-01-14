@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NerdStoreEnterprise.WebApp.MVC.Extensions;
 
 namespace NerdStoreEnterprise.WebApp.MVC.Configuration
 {
     public static class WebAppConfig
     {
-        public static IServiceCollection AddMvcConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllersWithViews();
+
+            services.Configure<AppSettings>(configuration);
 
             return services;
         }
@@ -22,7 +26,8 @@ namespace NerdStoreEnterprise.WebApp.MVC.Configuration
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error/500");
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
                 app.UseHsts();
             }
 
@@ -32,6 +37,8 @@ namespace NerdStoreEnterprise.WebApp.MVC.Configuration
             app.UseRouting();
 
             app.UseAuth();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
