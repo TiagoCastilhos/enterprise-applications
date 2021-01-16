@@ -80,7 +80,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
 
         private async Task PerformLoginAsync(UserLoginResponse response)
         {
-            var token = ObterTokenFormatado(response.AccessToken);
+            var token = GetToken(response.AccessToken);
 
             var claims = new List<Claim>();
             claims.Add(new Claim("JWT", response.AccessToken));
@@ -100,7 +100,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Controllers
                 authProperties);
         }
 
-        private static JwtSecurityToken ObterTokenFormatado(string jwtToken)
+        private static JwtSecurityToken GetToken(string jwtToken)
             => new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
     }
 }

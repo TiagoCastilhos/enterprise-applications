@@ -42,7 +42,7 @@ namespace NerdStoreEnterprise.Identity.API.Controllers
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(user, registerUserViewModel.Senha);
+            var result = await _userManager.CreateAsync(user, registerUserViewModel.Password);
 
             if (result.Succeeded)
                 return CustomResponse(await GenerateJwtAsync(registerUserViewModel.Email));
@@ -59,7 +59,7 @@ namespace NerdStoreEnterprise.Identity.API.Controllers
             if (!ModelState.IsValid)
                 return CustomResponse();
 
-            var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.Email, userLoginViewModel.Senha, false, true);
+            var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.Email, userLoginViewModel.Password, false, true);
 
             if (result.Succeeded)
                 return CustomResponse(await GenerateJwtAsync(userLoginViewModel.Email));

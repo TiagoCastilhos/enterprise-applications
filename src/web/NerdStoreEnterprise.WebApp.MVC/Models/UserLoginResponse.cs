@@ -4,10 +4,15 @@ namespace NerdStoreEnterprise.WebApp.MVC.Models
 {
     public sealed class UserLoginResponse
     {
-        public string AccessToken { get; }
-        public double ExpiresIn { get; }
-        public UserToken UserToken { get; }
+        public string AccessToken { get; set; }
+        public double ExpiresIn { get; set; }
+        public UserToken UserToken { get; set; }
         public ResponseResult ResponseResult { get; set; }
+
+        public UserLoginResponse()
+        {
+
+        }
 
         public UserLoginResponse(string accessToken, double expiresIn, UserToken userToken)
         {
@@ -24,9 +29,14 @@ namespace NerdStoreEnterprise.WebApp.MVC.Models
 
     public sealed class UserToken
     {
-        public string Id { get; }
-        public string Email { get; }
-        public IEnumerable<UserClaim> Claims { get; }
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public IEnumerable<UserClaim> Claims { get; set; }
+
+        public UserToken()
+        {
+
+        }
 
         public UserToken(string id, string email, IEnumerable<UserClaim> claims)
         {
@@ -38,8 +48,13 @@ namespace NerdStoreEnterprise.WebApp.MVC.Models
 
     public sealed class UserClaim
     {
-        public string Type { get; }
-        public string Value { get; }
+        public string Type { get; set; }
+        public string Value { get; set; }
+
+        public UserClaim()
+        {
+
+        }
 
         public UserClaim(string type, string value)
         {
