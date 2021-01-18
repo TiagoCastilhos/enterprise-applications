@@ -5,10 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NerdStoreEnterprise.Catalog.API.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using NerdStoreEnterprise.WebAPI.Core.Identity;
 
 namespace NerdStoreEnterprise.Catalog.API.Configuration
 {

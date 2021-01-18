@@ -9,7 +9,7 @@ namespace NerdStoreEnterprise.WebAPI.Core.Identity
 {
     public static class JwtConfig
     {
-        public static void AddJwtConfiguration(this IServiceCollection services,
+        public static IServiceCollection AddJwtConfiguration(this IServiceCollection services,
             IConfiguration configuration)
         {
             var appSettingsSection = configuration.GetSection("AppSettings");
@@ -36,12 +36,16 @@ namespace NerdStoreEnterprise.WebAPI.Core.Identity
                     ValidIssuer = appSettings.Issuer
                 };
             });
+
+            return services;
         }
 
-        public static void UseAuthConfiguration(this IApplicationBuilder app)
+        public static IApplicationBuilder UseAuthConfiguration(this IApplicationBuilder app)
         {
             app.UseAuthentication();
             app.UseAuthorization();
+
+            return app;
         }
     }
 }

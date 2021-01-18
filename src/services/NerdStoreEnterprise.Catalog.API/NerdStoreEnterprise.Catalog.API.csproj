@@ -18,13 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Extensions\" />
     <Folder Include="Business\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\NerdStoreEnterprise.Core\NerdStoreEnterprise.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\NerdStoreEnterprise.WebAPI.Core\NerdStoreEnterprise.WebAPI.Core.csproj" />
   </ItemGroup>
 
 

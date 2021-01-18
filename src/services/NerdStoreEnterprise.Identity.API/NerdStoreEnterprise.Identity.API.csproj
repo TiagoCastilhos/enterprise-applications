@@ -23,5 +23,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\NerdStoreEnterprise.WebAPI.Core\NerdStoreEnterprise.WebAPI.Core.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NerdStoreEnterprise.Identity.API.Configuration;
+using NerdStoreEnterprise.WebAPI.Core.Identity;
 
 namespace NerdStoreEnterprise.Identity.API
 {
@@ -32,7 +33,7 @@ namespace NerdStoreEnterprise.Identity.API
             services
                 .AddApiConfiguration()
                 .AddIdentity(Configuration)
-                .AddJwt(Configuration)
+                .AddJwtConfiguration(Configuration)
                 .AddSwagger();
         }
 
@@ -40,7 +41,7 @@ namespace NerdStoreEnterprise.Identity.API
         {
             app
                 .UseApiConfiguration(env)
-                .UseIdentity()
+                .UseAuthConfiguration()
                 .UseSwagger();
         }
     }

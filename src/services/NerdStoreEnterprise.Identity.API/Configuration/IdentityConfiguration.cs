@@ -23,14 +23,5 @@ namespace NerdStoreEnterprise.Identity.API.Configuration
 
             return services;
         }
-
-        public static IApplicationBuilder UseIdentity(this IApplicationBuilder app)
-        {
-            app
-                .UseAuthentication()
-                .UseAuthorization();
-
-            return app;
-        }
     }
 }
