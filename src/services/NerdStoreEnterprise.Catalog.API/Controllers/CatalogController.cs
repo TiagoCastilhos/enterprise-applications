@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NerdStoreEnterprise.Catalog.API.Models;
 using NerdStoreEnterprise.WebAPI.Core.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NerdStoreEnterprise.Catalog.API.Controllers
@@ -22,16 +20,20 @@ namespace NerdStoreEnterprise.Catalog.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("catalog/products")]
-        public async Task<IEnumerable<Product>> Index()
+        public async Task<IActionResult> Index()
         {
-            return await _productRepository.GetAllAsync();
+            var products = await _productRepository.GetAllAsync();
+
+            return Ok(products);
         }
 
         [ClaimsAuthorize("Catalog", "Read")]
         [HttpGet("catalog/products/{id}")]
-        public async Task<Product> ProdutoDetalhe(Guid id)
+        public async Task<IActionResult> ProdutoDetalhe(Guid id)
         {
-            return await _productRepository.GetAsync(id);
+            var product = await _productRepository.GetAsync(id);
+
+            return Ok(product);
         }
     }
 }
