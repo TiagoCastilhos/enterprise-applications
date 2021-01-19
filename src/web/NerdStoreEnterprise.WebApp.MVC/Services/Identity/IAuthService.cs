@@ -1,7 +1,7 @@
-﻿using NerdStoreEnterprise.WebApp.MVC.Models;
+﻿using NerdStoreEnterprise.WebApp.MVC.Models.Identity;
 using System.Threading.Tasks;
 
-namespace NerdStoreEnterprise.WebApp.MVC.Services
+namespace NerdStoreEnterprise.WebApp.MVC.Services.Identity
 {
     public interface IAuthService
     {

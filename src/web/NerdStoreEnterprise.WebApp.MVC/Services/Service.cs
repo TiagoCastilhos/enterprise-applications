@@ -16,7 +16,7 @@ namespace NerdStoreEnterprise.WebApp.MVC.Services
                 "application/json");
         }
 
-        protected async Task<T> Deserialize<T>(HttpResponseMessage responseMessage)
+        protected async Task<T> DeserializeAsync<T>(HttpResponseMessage responseMessage)
         {
             var options = new JsonSerializerOptions
             {

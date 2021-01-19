@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using NerdStoreEnterprise.WebApp.MVC.Models;
-using NerdStoreEnterprise.WebApp.MVC.Services;
+using NerdStoreEnterprise.WebApp.MVC.Models.Identity;
+using NerdStoreEnterprise.WebApp.MVC.Services.Identity;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

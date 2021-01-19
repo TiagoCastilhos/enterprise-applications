@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NerdStoreEnterprise.WebApp.MVC.Models
+namespace NerdStoreEnterprise.WebApp.MVC.Models.Identity
 {
     public sealed class UserLoginResponse
     {
