@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NerdStoreEnterprise.WebApp.MVC.Extensions;
+using System.Globalization;
 
 namespace NerdStoreEnterprise.WebApp.MVC.Configuration
 {
@@ -37,6 +39,14 @@ namespace NerdStoreEnterprise.WebApp.MVC.Configuration
             app.UseRouting();
 
             app.UseAuth();
+
+            var supportedCultures = new[] { new CultureInfo("pt-BR") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseMiddleware<ExceptionMiddleware>();
 
